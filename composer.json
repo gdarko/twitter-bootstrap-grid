@@ -1,5 +1,5 @@
 {
-  "name": "gdarko/TwitterBootstrapGrid",
+  "name": "gdarko/twitter-bootstrap-grid",
   "description": "Easily generate valid Twitter Bootstrap 3 grid using PHP loops",
   "license": "MIT",
   "keywords": ["twitter", "bootstrap", "grid", "php", "script"],
