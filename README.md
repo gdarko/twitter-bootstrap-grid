@@ -10,9 +10,9 @@ You can install it with composer, you need to have composer installed and you ar
 ```
 composer require gdarko/twitter-bootstrap-grid
 ```
-### What the hell is Composer?
+### I don't know what Composer is
 I don't recommend this way but you can always download the latest release and require the class.
-```
+```php
 require twitter-bootstrap-grid/src/TwitterBootstrapGrid.class.php
 ```
 
