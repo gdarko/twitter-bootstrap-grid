@@ -1,6 +1,6 @@
 <?php
 
-namespace gdarko\tools;
+namespace gdarko\Tools;
 
 
 class TwitterBootstrapGrid
@@ -77,7 +77,7 @@ class TwitterBootstrapGrid
         $this->row_columns_lg = 4;
         $this->row_columns_md = 4;
         $this->row_columns_sm = 2;
-        $this->row_columns_xs = 2;
+        $this->row_columns_xs = 1;
     }
 
     /**
@@ -187,7 +187,7 @@ class TwitterBootstrapGrid
                 $output .= '</div>';
                 $counter++;
                 if ($counter === $this->row_columns_lg) {
-                    $output .= '</div><!--/.' . $this->row_class . '--><div class="clearfix"></div>';
+                    $output .= '</div><!--/.' . $this->row_class . '-->';
                     $counter = 0;
                 }
             }
@@ -230,6 +230,6 @@ class TwitterBootstrapGrid
             $columns = str_replace("{additional}", "", $columns);
         }
 
-        return $columns;
+        return trim($columns);
     }
 }

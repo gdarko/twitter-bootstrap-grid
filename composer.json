@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "gdarko\\TwitterBootstrapGrid\\": "src"
+      "gdarko\\Tools\\": "src/"
     }
   }
 }
