@@ -26,7 +26,7 @@ class TwitterBootstrapGrid
     /**
      * Keep the column class;
      */
-    private $column_class = '{class_lg} {class_md} {class_sm} {class_xs} {additional}';
+    private $class_holder = '{class_lg} {class_md} {class_sm} {class_xs} {additional}';
 
     /**
      * Number of columns on medium screens
@@ -44,9 +44,40 @@ class TwitterBootstrapGrid
     private $row_columns_sm = null;
 
     /**
+     * This is custom number of columns per row, if this is set the builder will ignore the
+     * column count that is contained in $row_columns_lg
+     * @var null
+     */
+    private $custom_columns_per_row_number = null;
+
+    /**
      * Number of columns on tablets and mobile screens
      */
     private $row_columns_xs = null;
+
+    /**
+     * Custom col-lg class, if this is set the builder will ignore the $row_columns_xs
+     * @var string
+     */
+    private $custom_lg = null;
+
+    /**
+     * Custom col-md class, if this is set the builder will ignore the $row_columns_xs
+     * @var string
+     */
+    private $custom_md = null;
+
+    /**
+     * Custom col-sm class, if this is set the builder will ignore the $row_columns_xs
+     * @var string
+     */
+    private $custom_sm = null;
+
+    /**
+     * Custom col-xs class, if this is set the builder will ignore the $row_columns_xs
+     * @var string
+     */
+    private $custom_xs = null;
 
     /**
      * Additional Class
@@ -102,6 +133,47 @@ class TwitterBootstrapGrid
                 break;
             default:
                 $this->row_columns_lg = $number;
+        }
+    }
+
+    /**
+     * Helper method for setting custom total columns per row. If this is
+     * set the row will ignore the columns number contained in $row_col_lg
+     * This is good if you building mobile-first grids, for example you have
+     * six .col-sm-6 columns in one .row and you want three columns per row
+     * on mobiles (.col-xs-3)
+     *
+     * @param $number
+     */
+    public function setCustomTotalRowColumns($number)
+    {
+        $this->custom_columns_per_row_number = $number;
+    }
+
+    /**
+     * Helper method for a custom column class.
+     * Using this you may build grid with offsets, mobile-first girds, etc.
+     *
+     * The default viewport is lg
+     *
+     * @param $class
+     * @param string $viewport
+     */
+    public function setCustomColumnClass($class, $viewport = 'lg')
+    {
+        switch ($viewport)
+        {
+            case "md":
+                $this->custom_md = $class;
+                break;
+            case "sm":
+                $this->custom_sm = $class;
+                break;
+            case "xs":
+                $this->custom_xs = $class;
+                break;
+            default:
+                $this->custom_lg = $class;
         }
     }
 
@@ -177,6 +249,13 @@ class TwitterBootstrapGrid
         $output = "";
         $counter = 0;
         $column_class = $this->generateColumnClass();
+
+        if( !is_null($this->custom_columns_per_row_number) ){
+            $row_length = $this->custom_columns_per_row_number;
+        }else{
+            $row_length = $this->row_columns_lg;
+        }
+
         if (count($this->columns) > 0) {
             foreach ($this->columns as $column) {
                 if ($counter === 0) {
@@ -186,7 +265,7 @@ class TwitterBootstrapGrid
                 $output .= $column;
                 $output .= '</div>';
                 $counter++;
-                if ($counter === $this->row_columns_lg) {
+                if ($counter === $row_length) {
                     $output .= '</div><!--/.' . $this->row_class . '-->';
                     $counter = 0;
                 }
@@ -201,27 +280,45 @@ class TwitterBootstrapGrid
      */
     public function generateColumnClass()
     {
-        $col_lg = $this->gridsize / $this->row_columns_lg;
-        $columns = str_replace("{class_lg}", "col-lg-" . $col_lg, $this->column_class);
-        if ($this->row_columns_md !== 0) {
-            $col_md = $this->gridsize / $this->row_columns_md;
-            $columns = str_replace("{class_md}", "col-md-" . $col_md, $columns);
-        } else {
-            $columns = str_replace("{class_md}", "", $columns);
+        $col_lg = (int)$this->gridsize / $this->row_columns_lg;
+
+        if(!is_null($this->custom_lg)){
+            $columns = str_replace("{class_lg}", $this->custom_lg, $this->class_holder);
+        }else{
+            $columns = str_replace("{class_lg}", "col-lg-" . $col_lg, $this->class_holder);
         }
 
-        if ($this->row_columns_sm !== 0) {
-            $col_sm = $this->gridsize / $this->row_columns_sm;
-            $columns = str_replace("{class_sm}", "col-sm-" . $col_sm, $columns);
-        } else {
-            $columns = str_replace("{class_sm}", "", $columns);
+        if(!is_null($this->custom_md)) {
+            $columns = str_replace("{class_md}", $this->custom_md, $columns);
+        }else{
+            if ($this->row_columns_md !== 0) {
+                $col_md = $this->gridsize / (int)$this->row_columns_md;
+                $columns = str_replace("{class_md}", "col-md-" . $col_md, $columns);
+            } else {
+                $columns = str_replace("{class_md}", "", $columns);
+            }
         }
 
-        if ($this->row_columns_xs !== 0) {
-            $col_xs = $this->gridsize / $this->row_columns_xs;
-            $columns = str_replace("{class_xs}", "col-xs-" . $col_xs, $columns);
-        } else {
-            $columns = str_replace("{class_xs}", "", $columns);
+        if(!is_null($this->custom_sm)) {
+            $columns = str_replace("{class_sm}", $this->custom_sm, $columns);
+        }else{
+            if ($this->row_columns_sm !== 0) {
+                $col_sm = $this->gridsize / (int)$this->row_columns_sm;
+                $columns = str_replace("{class_sm}", "col-sm-" . $col_sm, $columns);
+            } else {
+                $columns = str_replace("{class_sm}", "", $columns);
+            }
+        }
+
+        if(!is_null($this->custom_xs)) {
+            $columns = str_replace("{class_xs}", $this->custom_xs, $columns);
+        }else{
+            if ($this->row_columns_xs !== 0) {
+                $col_xs = $this->gridsize / (int)$this->row_columns_xs;
+                $columns = str_replace("{class_xs}", "col-xs-" . $col_xs, $columns);
+            } else {
+                $columns = str_replace("{class_xs}", "", $columns);
+            }
         }
 
         if (!is_null($this->additional_class)) {
