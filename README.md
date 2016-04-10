@@ -59,6 +59,24 @@ foreach($objects as $object){
 $grid->setTotalRowColumns(3, "sm");
 echo $grid->build();
 ```
+
+### Example #4
+Do you want to build a fluid grids? For example you have 3 columns per row on large screens and two columns per row on mobiles. It's not that easy with the default Bootstrap aproach. This snippet will make your life easier.
+```php
+use gdarko\Tools\TwitterBootstrapGrid;
+
+$grid = new TwitterBootstrapGrid();
+//Demo data, ignore it
+for($i = 0; $i < 9; $i++){
+    $grid->addColumn($i . "");
+}
+
+$grid->setCustomTotalRowColumns($grid->getColumnsCount());
+$grid->setCustomColumnClass("col-lg-4", "lg");
+$grid->setCustomColumnClass("col-xs-6", "xs");
+
+echo $grid->build();
+```
 Pretty straightforward, huh?
 
 # Changelog
