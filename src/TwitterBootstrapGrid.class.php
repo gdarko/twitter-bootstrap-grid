@@ -86,17 +86,19 @@ class TwitterBootstrapGrid
 
     /**
      * BootstrapGrid constructor.
-     * @param $row_columns
+     * @param null $row_columns
      * @param null $columns
      */
-    public function __construct($row_columns, $columns = null)
+    public function __construct($row_columns = null, $columns = null)
     {
         if (is_array($columns) && count($columns) > 0) {
             $this->columns = $columns;
         } else {
             $this->columns = array();
         }
-        $this->row_columns_lg = $row_columns;
+        if( ! is_null($row_columns)){
+            $this->row_columns_lg = $row_columns;
+        }
         $this->defaults();
     }
 
