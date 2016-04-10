@@ -80,6 +80,9 @@ echo $grid->build();
 Pretty straightforward, huh?
 
 # Changelog
+### v1.1
+- Fluid grids support ( see Example #4 )
+- Updated constructor ( no need to require $row_column_lg in case we are creating fluid grids )
 ### v1.0
 - Integration with Composer
 - Integration with PSR-4
