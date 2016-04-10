@@ -4,6 +4,18 @@ This is a lightweight PHP script that makes easy generating a ``Twitter Bootstra
 It uses the default Twitter bootstrap classes like ``.row`` and ``.col-*`` to generate the grids.
 It's pretty straightforward to use, it allows to specify how many columns per row to have for each Bootstrap viewport (xs, sm, md, lg)
 
+# Installation
+### Composer
+You can install it with composer, you need to have composer installed and you are good to go!
+```
+composer require gdarko/twitter-bootstrap-grid
+```
+### I don't know what Composer is
+I don't recommend this way but you can always download the latest release and require the class.
+```php
+require "twitter-bootstrap-grid/src/TwitterBootstrapGrid.class.php"
+```
+
 # How to Use
 Few examples how to use the script:
 
