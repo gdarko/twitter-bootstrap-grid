@@ -273,7 +273,7 @@ class TwitterBootstrapGrid
                 }
             }
             //if the last row has less elements than the total per row. Add a div
-            if($counter < $row_length-1){
+            if($counter <= $row_length-1){
                 $output .= "</div>";
             }
         }
