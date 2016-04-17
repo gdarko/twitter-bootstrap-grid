@@ -80,6 +80,10 @@ echo $grid->build();
 Pretty straightforward, huh?
 
 # Changelog
+
+### v1.2
+-Fix: Missing closing </div> when the last row has less columns than specified number of columns per row.
+
 ### v1.1
 - Fluid grids support ( see Example #4 )
 - Updated constructor ( no need to require $row_column_lg in case we are creating fluid grids )
